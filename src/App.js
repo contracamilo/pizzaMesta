@@ -4,6 +4,7 @@ import Banner from './components/Banner/Banner';
 import { Menu } from './components/Menu/Menu';
 import { GlobalStyle } from './Styles/GlobalStyles';
 import { FoodDialog } from './components/FoodDialog/FoodDialog';
+import { Order } from './components/Order/Order';
 
 const App = () => {
 
@@ -14,6 +15,7 @@ const App = () => {
       <GlobalStyle Bg />
       <FoodDialog openFood={openFood} setOpenFood={setOpenFood}/>
       <Navbar />
+      <Order />
       <Banner />
       <Menu setOpenFood={setOpenFood}/>
     </React.Fragment>
