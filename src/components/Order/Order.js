@@ -7,6 +7,8 @@ import {
 } from "../FoodDialog/FoodDialog";
 import { formatPrice } from '../../Data/FoodData'
 import { getPrice } from '../FoodDialog/FoodDialog'
+import { cursor } from 'sisteransi';
+import { allResolved } from 'q';
 
 const OrderStyled = styled.div`
   position: fixed;
@@ -20,6 +22,7 @@ const OrderStyled = styled.div`
   display: flex;
   flex-direction: column;
 `
+
 
 const OrderContent = styled(DialogContent)`
   padding: 20px;
@@ -45,7 +48,7 @@ const OrderContainer = styled.div`
 const OrderItem = styled.div`
   padding: 10px 0px;
   display: grid;
-  grid-template-columns: 10px 20px 150px 20px 50px;
+  grid-template-columns: 10px 150px 20px  20px 50px;
   justify-content: space-between;
 `;
 
@@ -55,11 +58,18 @@ const DetailItem = styled.div`
 `;
 
 
-export const Order = ({orders}) => {
+export const Order = ({orders, setOrders, setOpenFood}) => {
 
   const subtotal = orders.reduce((total, order) => total + getPrice(order) , 0)
   const tax = subtotal * 0.08;
   const total = subtotal + tax;
+
+  const deleteItem = index => {
+    const newOrders = [...orders];
+    newOrders.splice(index, 1);
+    setOrders(newOrders);
+   
+  };
 
   return (
     <OrderStyled>
@@ -69,11 +79,23 @@ export const Order = ({orders}) => {
         : <OrderContent>
             <OrderContainer> Found {orders.length} orders </OrderContainer>
             {orders.map((order, index) => (
-                <OrderContainer> 
-                    <OrderItem key={index+1}>
-                        <div>Ref.{index+1}</div>
-                        <div></div>
+                <OrderContainer key={index+1} editable> 
+                    <OrderItem
+                       onClick={() => {
+                        setOpenFood({ ...order, index });
+                      }}
+                    >
+                        <div>{index+1}.</div>
                         <div>{order.name}</div>
+                        <div
+                          style={{ cursor: "pointer", zIndex:99, pointerEvents:allResolved }}
+                          onClick={e => {
+                            e.stopPropagation();
+                            deleteItem(index);
+                          }}
+                        >
+                          🗑                    ️
+                        </div>
                         <div>x{order.quantity}</div>
                         <div>{formatPrice(getPrice(order))}</div>
                     </OrderItem>
