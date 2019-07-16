@@ -15,7 +15,7 @@ const App = () => {
   const openFood = useOpenFood();
   const orders = useOrders();
   useTitle({...openFood, ...orders})
-  console.log(openFood, orders);
+  
   return (
     <React.Fragment>
       <GlobalStyle Bg />
