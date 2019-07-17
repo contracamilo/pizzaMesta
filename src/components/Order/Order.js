@@ -7,7 +7,7 @@ import {
 } from "../FoodDialog/FoodDialog";
 import { formatPrice } from '../../Data/FoodData'
 import { getPrice } from '../FoodDialog/FoodDialog'
-import { cursor } from 'sisteransi';
+//import { cursor } from 'sisteransi';
 import { allResolved } from 'q';
 
 const OrderStyled = styled.div`

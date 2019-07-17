@@ -11,11 +11,10 @@ export const Menu = ({setOpenFood}) => {
     return (
         <MenuStyled>
             {Object.entries(foods).map(([sectionName, foods], index) => (
-                <React.Fragment>
+                <div key={index}>
                     <h1> {sectionName} </h1>
                     <FoodGrid key={index}>
                         {foods.map((food, index ) => (
-                            
                                 <Food 
                                     key={`food-${index}`} 
                                     img={food.img} 
@@ -30,7 +29,7 @@ export const Menu = ({setOpenFood}) => {
                            
                         ))}
                     </FoodGrid>
-                </React.Fragment>
+                </div>
             ))}
         </MenuStyled>
     )
