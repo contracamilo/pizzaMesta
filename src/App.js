@@ -13,13 +13,6 @@ import { useAuthentication } from './Hooks/useAuthentication'
 
 
 
-const database = window.firebase.database();
-
-const refTest = database.ref('testObj').push();
-refTest.set({
-  hello:'world'
-})
-
 
 const App = () => {
   //hooks
@@ -34,7 +27,7 @@ const App = () => {
       <GlobalStyle Bg />
       <FoodDialog {...openFood} {...orders} />
       <Navbar {...auth}/>
-      <Order {...orders} {...openFood}/>
+      <Order {...orders} {...openFood} {...auth}  />
       <Banner />
       <Menu {...openFood}/>
     </React.Fragment>

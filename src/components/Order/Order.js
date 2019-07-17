@@ -10,6 +10,9 @@ import { getPrice } from '../FoodDialog/FoodDialog'
 //import { cursor } from 'sisteransi';
 import { allResolved } from 'q';
 
+
+const database = window.firebase.database();
+
 const OrderStyled = styled.div`
   position: fixed;
   right: 0px;
@@ -58,7 +61,36 @@ const DetailItem = styled.div`
 `;
 
 
-export const Order = ({orders, setOrders, setOpenFood}) => {
+const sendOrder = (orders, { email, displayName }) => {
+  const  newOrderRef = database.ref("orders").push();
+  const newOrders = orders.map(order => {
+    return Object.keys(order).reduce((acc, orderKey) => {
+      if (!order[orderKey]) {
+        // undefined value
+        return acc;
+      }
+      if (orderKey === "toppings") {
+        return {
+          ...acc,
+          [orderKey]: order[orderKey]
+          .filter(({ checked }) => checked)
+          .map(({ name }) => name)
+        };
+      }
+      return {
+        ...acc,
+        [orderKey]: order[orderKey]
+      };
+    }, {});
+  });
+  newOrderRef.set({
+    order: newOrders,
+    email,
+    displayName
+  });
+}
+
+export const Order = ({orders, setOrders, setOpenFood, login, loggedIn}) => {
 
   const subtotal = orders.reduce((total, order) => total + getPrice(order) , 0)
   const tax = subtotal * 0.08;
@@ -132,7 +164,13 @@ export const Order = ({orders, setOrders, setOpenFood}) => {
       
       }
       <DialogFooter>
-         <ConfirmButton>Checkout</ConfirmButton>
+        <ConfirmButton onClick={() => {
+          if (loggedIn) {
+            sendOrder(orders, loggedIn);
+          } else {
+            login();
+          }
+        }}>Checkout</ConfirmButton>
       </DialogFooter> 
     </OrderStyled>
   )
