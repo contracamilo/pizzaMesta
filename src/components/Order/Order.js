@@ -90,7 +90,7 @@ const sendOrder = (orders, { email, displayName }) => {
   });
 }
 
-export const Order = ({orders, setOrders, setOpenFood, login, loggedIn}) => {
+export const Order = ({orders, setOrders, setOpenFood, login, loggedIn, setOpenOrderDialog}) => {
 
   const subtotal = orders.reduce((total, order) => total + getPrice(order) , 0)
   const tax = subtotal * 0.08;
@@ -163,15 +163,16 @@ export const Order = ({orders, setOrders, setOpenFood, login, loggedIn}) => {
       
       
       }
-      <DialogFooter>
-        <ConfirmButton onClick={() => {
+      {orders.length > 0 && <DialogFooter>
+         <ConfirmButton onClick={() => {
           if (loggedIn) {
+            setOpenOrderDialog(true);
             sendOrder(orders, loggedIn);
           } else {
             login();
           }
         }}>Checkout</ConfirmButton>
-      </DialogFooter> 
+      </DialogFooter> }
     </OrderStyled>
   )
 }

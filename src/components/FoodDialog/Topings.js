@@ -23,7 +23,7 @@ export function Toppings({ toppings, checkTopping }) {
         <CheckboxLabel key={i}>
           <ToppingCheckbox
             type="checkbox"
-            checked={topping.checked}
+            defaultChecked={topping.checked}
             onClick={() => {
               checkTopping(i);
             }}
