@@ -33,7 +33,7 @@ export const Navbar = ({login, loggedIn, logout}) => {
   return (
     <NavbarStyled>
       <Logo>
-        Sliceline{" "}
+        pizzaMesta{" "}
         <span role="img" aria-label="pizza slice">
           🍕
         </span>

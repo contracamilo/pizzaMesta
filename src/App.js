@@ -30,10 +30,10 @@ const App = () => {
       <GlobalStyle Bg />
       <OrderDialog {...orderDialog} {...orders} />
       <FoodDialog {...openFood} {...orders} />
-      <Navbar {...auth}/>
-      <Order {...orders} {...openFood} {...auth}  {...orderDialog}/>
+      <Navbar {...auth} />
+      <Order {...orders} {...openFood} {...auth} {...orderDialog} />
       <Banner />
-      <Menu {...openFood}/>
+      <Menu {...openFood} />
     </React.Fragment>
   );
 }
